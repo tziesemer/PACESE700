@@ -1,0 +1,32 @@
+name: DevSecOps Security Gate
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  secret-scan:
+    name: Gitleaks Secret Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  sast-scan:
+    name: Semgrep SAST Analysis
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Run Semgrep OWASP Top 10 Ruleset
+        run: semgrep scan --config p/owasp-top-ten --error

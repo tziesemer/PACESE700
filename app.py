@@ -5,7 +5,9 @@ from flask import Flask, request
 app = Flask(__name__)
 
 # 1. Intentional Hardcoded Secret (Triggers Gitleaks)
-AWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+AWS_ACCESS_KEY_ID = "AKIAIOSFODNN7REALKEY1"
+AWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCY9876543210"
+GITHUB_TOKEN = "ghp_9876543210abcdefghijklmnopqrstuv1234"
 
 @app.route("/user")
 def get_user():
